@@ -8,8 +8,9 @@ The program runs with two arguments:
 - the path to the superset CSV file (to extract the merchant number)
 - the path to the converted doc file
 
-*Example:*
-Running this would convert the 20/11/2017 document to a CSV using the merchant numbers from the Supserset CSV provided:
+*Example*
+ 
+Running this would convert the 20/11/2017 document to a CSV using the merchant numbers from the Superset CSV provided:
 
 ```
 doc2csv sqllab_cc_authorizations_20180117T122752.csv 20112017.txt
