@@ -21,8 +21,11 @@ namespace bankconverter {
     const std::string kDelimiter = ",";
     const char kCardMask = 'X';
 
-    std::string removeAll(const std::string & str, std::string v);
-    std::string maskCard(const std::string& str);
+    std::string findMerchantNumber(const Record &, const csv::Parser &);
+    double toDouble(const std::string &);
+    std::string formatDate(const std::string &);
+    std::string removeAll(const std::string &, std::string);
+    std::string maskCard(const std::string &);
 
 
 }
@@ -32,7 +35,7 @@ public:
     Converter();
     virtual ~Converter();
 
-    void convert(const DocxParser &, const csv::Parser &);
+    std::string convert(const DocxParser &, const csv::Parser &);
 
 protected:
 

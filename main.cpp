@@ -1,4 +1,7 @@
 #include <iostream>
+#include <string>
+#include <fstream>
+#include <iostream>
 #include <DocxParser.h>
 #include <Converter.h>
 #include <CSVparser.hpp>
@@ -9,10 +12,23 @@
 
 using namespace std;
 
+void save(string name, const string& contents) {
+    string file = name.substr(0, name.find_last_of('.')) + ".csv";
+    ofstream fs(file.c_str());
+    fs << contents;
+    fs.flush();
+    if (fs.bad()) {
+        cout << "Could not save as a CSV file" << endl;
+    } else {
+        cout << "Saved " << file << " successfully" << endl;
+    }
+    fs.close();
+}
+
 int main(int argc, char ** args) {
     if (argc < 3) {
-        cout << "Path to a converted docx file and the superset csv file are required." << endl << "Make sure the bank doc has been converted to a txt field then try running with args:" << endl << endl;
-        cout << "\tbank2csv [path to superset csv] [path to txt converted bank doc]" << endl;
+        cout << "Path to a converted docx file and the superset csv file are required." << endl << "Make sure the doc has been converted to a txt file then try running with args:" << endl << endl;
+        cout << "\tdoc2csv [path to superset csv] [path to txt converted doc]" << endl;
         return 1;
     }
     cout << "Parsing " << args[2] << "..." << endl;
@@ -27,7 +43,9 @@ int main(int argc, char ** args) {
         cout << "Converting " << args[2] << " to CSV..." << endl;
 
         Converter conv;
-        conv.convert(docParser, csvParser);
+        string c = conv.convert(docParser, csvParser);
+
+        save(args[2], c);
     } catch (csv::Error &err) {
         cout << "Could not parse CSV file: " << err.what() << endl;
         return -1;
